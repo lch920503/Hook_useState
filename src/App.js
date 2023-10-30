@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
-function App() {
+const App = () => {
+  const [name, setName] = useState("");
+  const [nameList, setNameList] = useState([]);
+  const [nameId, setNameId] = useState(1);
+
+  const onChangeName = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleAddName = () => {
+    setNameId(nameId + 1);
+    const obj = {
+      id: nameId,
+      name,
+    };
+    setNameList((prev) => prev.concat(obj));
+    setName("");
+  };
+  console.log("nameList", nameList);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>React Hook - useState</h1>
+      <div>
+        <label htmlFor="name">이름: </label>
+        <input
+          type="text"
+          id="name"
+          value={name}
+          onChange={onChangeName}
+          placeholder="이름을 입력해주세요"
+        />
+        <button onClick={handleAddName}>등록</button>
+      </div>
+      <div>
+        <ul>
+          {nameList.map((name) => (
+            <li key={name.id}>{name.name}</li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
-}
+};
 
 export default App;
